@@ -1,0 +1,23 @@
+EPOSS - Educational programming and observation support structure
+-----------------------------------------------------------------
+
+With EPOSS, students and lecturers are supported in programming physical
+'things' in different education settings - offline, hybrid or online.
+The EPOSS architecture allows for explicitly programming movement
+commands or autoprogramming (injecting) replayed movements into moving
+'things' and observing the effects.
+
+Although conceptually generic, the EPOSS implementation is currently
+focused on
+ (i) EV3 robots as 'things'
+ (ii) education in traffic engineering with appropriate scenarios
+ (iii) Linux as educator operating system; students can use any system
+
+How to start:
+ - read the CSEDU'21 paper to get all background information
+ - look at the architecture diagram
+ - prepare environment by following instructions in rpycloudsetup.txt
+ - boot up a 'thing' and make it accessible on the network
+ - optional: add a corresponding hostname to /etc/hosts
+ - adjust the hostname/address in localstart.sh and run the script
+ - try out the manoevres after substituting rpyc with rpycloud

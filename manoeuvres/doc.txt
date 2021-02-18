@@ -1,0 +1,21 @@
+This directory contains traffic engineering / robotic car programming
+scenarios. All commands are documented using registered car hostnames.
+
+'backforth':
+  Car drives forward and backward in a loop. Useful to detect drifts.
+
+  % python3 backforth.py <carname>
+
+'emergencystop':
+  Car stops before hitting an obstacle. The reaction time needs to be
+  taken into account.
+
+  % python3 emergencystop.py <carname> 50
+
+'takeover':
+
+  One car takes over another one. Implemented by running two instances
+  of the script with different speed and behaviour indications.
+
+  % python3 takeover.py <carname1> 10 &
+  % python3 takeover.py <carname2> 15 takeover

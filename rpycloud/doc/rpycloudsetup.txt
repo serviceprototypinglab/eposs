@@ -1,0 +1,30 @@
+Remote setup including proxy:
+
+ - install dependencies: python3-flask, python3-flask-cors, python3-pika
+ - install rabbitmq-server on the same machine
+ - copy rpycloudproxy.py on a publicly accessible machine
+ - create start script: PORT=10080 python3 rpycloudproxy.py
+ - configure /etc/rabbitmq/rabbitmq-env.conf:
+
+   CONFIGFILE=/etc/rabbitmq/rabbitmq
+
+ - configure /etc/rabbitmq/rabbitmq.config:
+
+   [
+     {rabbit, [
+         {loopback_users, []}
+       ]
+     }
+   ].
+
+ - run start script: ./start.sh
+
+Local setup:
+
+ - configure /etc/hosts:
+
+   192.168.178.30  ev3-NAME
+
+ - check robot boot names etc. in localstart.sh
+ - run start script: ./localstart.sh; and wait until OK appears
+ - check functionality overall: run python3 usage.py

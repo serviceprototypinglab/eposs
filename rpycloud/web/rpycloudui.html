@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>RPyCloud UI -- Web Frontend</title>
+<script type="text/javascript">
+var ep = "http://localhost:8081";
+setInterval(loadimg, 2000);
+function loadimg(){
+  webcam = document.getElementById("webcam");
+  ts = new Date().getTime();
+  webcam.src = "http://localhost:8081/cam" + "?ts=" + ts;
+}
+function sendcommand(){
+  command = document.getElementById("command");
+  cmdraw = command.value;
+  command.value = "";
+  key = document.getElementById("session").value;
+
+  pos = cmdraw.indexOf("(");
+  cmd = cmdraw.substr(0, pos);
+  //pp = encodeURI(cmdraw.substr(pos));
+  pp = cmdraw.substr(pos);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", ep + "/" + cmd + "/" + pp + "/" + key, true);
+  xhr.onload = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+	response = document.getElementById("response");
+	response.value = xhr.responseText;
+      }
+    }
+  };
+  xhr.send(null);
+}
+function connect(){
+  host = document.getElementById("host").value;
+  port = document.getElementById("port").value;
+  cred = document.getElementById("cred").value;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", ep + "/connect/" + host + "/" + port + "/" + cred, true);
+  xhr.onload = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+	session = document.getElementById("session");
+	session.value = xhr.responseText;
+      }else{
+        // something failed :(
+      }
+    }
+  };
+  //xhr.onerror = function(e){
+  //  alert("ERROR" + e.toString());
+  //};
+  xhr.send(null);
+}
+</script>
+</head>
+<body>
+<h1>Command and Control</h1>
+<div>
+Device Host:
+<input name="host" id="host" size=6 value="ev3-000">
+Port:
+<input name="port" id="port" size=6 value="8401">
+Credential:
+<input name="cred" id="cred" size=6 value="000">
+<input type="submit" value="Connect" onclick="javascript:connect()">
+Session:
+<input name="session" id="session" size=6 readonly="readonly" value="">
+</div>
+<div>
+Command:
+<input name="command" id="command">
+<input type="submit" value="Send" onclick="javascript:sendcommand()">
+Response:
+<input name="response" id="response" readonly="readonly" value="">
+</div>
+<p></p>
+<div style="background-color: #00a0c0">
+Command overview:
+<ul>
+<li>on()</li>
+<li>stop()</li>
+<li>left(1..100)</li>
+<li>...</li>
+</ul>
+</div>
+<h1>Webcam</h1>
+<div style="background-color: #90b000">
+Loading...
+<img id="webcam">
+</div>
+</body>
+</html>
